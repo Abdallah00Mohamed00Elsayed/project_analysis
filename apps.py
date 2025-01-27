@@ -11,7 +11,7 @@ st.set_page_config(
     page_icon="📊"
 )
 
-data = pd.read_csv(r"E:\python_session\Sessions\preprocessing\archive (1)\project\dataproject.csv" , encoding="utf-8")
+data = pd.read_csv("dataproject.csv" , encoding="utf-8")
 
 
 # Streamlit content starts here
