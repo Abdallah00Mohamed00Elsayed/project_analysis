@@ -10,8 +10,8 @@ st.set_page_config(
     page_title="Brazil Market Analysis",
     page_icon="📊"
 )
-
-data = pd.read_csv("dataproject.csv" , encoding="utf-8")
+url = "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/dataproject.csv"
+data = pd.read_csv(url)
 
 
 # Streamlit content starts here
