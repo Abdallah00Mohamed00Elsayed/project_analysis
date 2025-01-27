@@ -1,4 +1,4 @@
-import os
+
 import pandas as pd
 import streamlit as st
 import plotly.io as pio
@@ -10,8 +10,8 @@ st.set_page_config(
     page_title="Brazil Market Analysis",
     page_icon="📊"
 )
-os.chdir(r"E:\python_session\Sessions\preprocessing\archive (1)\project")
-data = pd.read_csv(r"E:\python_session\Sessions\preprocessing\archive (1)\project\dataproject.csv")
+
+data = pd.read_csv(r"E:\python_session\Sessions\preprocessing\archive (1)\project\dataproject.csv" , encoding="utf-8")
 
 
 # Streamlit content starts here
