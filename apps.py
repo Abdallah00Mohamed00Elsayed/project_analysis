@@ -9,7 +9,7 @@ st.set_page_config(
     page_title="Brazil Market Analysis",
     page_icon="📊"
 )
-data = pd.read_csv("dataproject.csv")
+data = pd.read_csv(r"E:\python_session\Sessions\preprocessing\archive (1)\project\dataproject.csv")
 
 
 # Streamlit content starts here
