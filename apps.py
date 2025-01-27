@@ -18,7 +18,7 @@ data = pd.read_csv(url)
 st.title("Brazil Market Analysis")
 st.write("Welcome to the dashboard!")
 page = st.sidebar.selectbox("Choose a Page", ["Dataset", "Analysis"])
-data = pd.read_csv("dataproject.csv")
+
 
 num = data.describe()
 cat = data.describe(include = 'O')
