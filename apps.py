@@ -48,27 +48,29 @@ elif page == "Analysis":
 
     with tab2:
         # Helper function to load JSON
-        def load_json_from_github(url):
-            try:
-                response = requests.get(url)
-                response.raise_for_status()
-                return pio.from_json(response.text)
-            except requests.exceptions.RequestException as req_err:
-                st.error(f"HTTP error occurred while fetching {url}: {req_err}")
-            except ValueError as json_err:
-                st.error(f"JSON decoding error for {url}: {json_err}")
-            except Exception as e:
-                st.error(f"An unexpected error occurred: {e}")
-            return None
+       import json
 
-        # Function to load CSV and create a Plotly chart
-        def load_csv_and_plot(url, x, y, color, title):
-            try:
-                df = pd.read_csv(url)
-                fig = px.bar(df, x=x, y=y, color=color, title=title)
-                st.plotly_chart(fig, use_container_width=True)
-            except Exception as e:
-                st.error(f"Failed to process CSV from {url}: {e}")
+def load_json_from_github(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        fig_dict = json.loads(response.text)
+
+        # Replace 'heatmapgl' with 'heatmap' dynamically
+        if "data" in fig_dict:
+            for trace in fig_dict["data"]:
+                if trace.get("type") == "heatmapgl":
+                    trace["type"] = "heatmap"
+
+        return pio.from_json(json.dumps(fig_dict))
+    except requests.exceptions.RequestException as req_err:
+        st.error(f"HTTP error occurred while fetching {url}: {req_err}")
+    except json.JSONDecodeError as json_err:
+        st.error(f"JSON decoding error for {url}: {json_err}")
+    except Exception as e:
+        st.error(f"An unexpected error occurred: {e}")
+    return None
+
 
         # List of JSON-based figures
         json_figures = [
