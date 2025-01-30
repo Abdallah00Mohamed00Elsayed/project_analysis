@@ -61,14 +61,21 @@ elif page == "Analysis":
                 st.error(f"An unexpected error occurred: {e}")
             return None
 
-        # List of figures to load
-        figures = [
+        # Function to load CSV and create a Plotly chart
+        def load_csv_and_plot(url, x, y, color, title):
+            try:
+                df = pd.read_csv(url)
+                fig = px.bar(df, x=x, y=y, color=color, title=title)
+                st.plotly_chart(fig, use_container_width=True)
+            except Exception as e:
+                st.error(f"Failed to process CSV from {url}: {e}")
+
+        # List of JSON-based figures
+        json_figures = [
             {"title": "Total price by product category", "url": "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/fig1.json"},
             {"title": "Relation between product weight and price", "url": "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/fig2.json"},
             {"title": "The highest month that has orders", "url": "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/fig3.json"},
             {"title": "The highest day that has orders", "url": "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/fig4.json"},
-            {"title": "The highest season that has orders", "url": "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/Q5.csv", "type": "csv", "plot_func": "bar", "x": "order_approved_at_date_Month_Seasont", "y": "order_count", "color": "order_approved_at_date_Month_Seasont", "labels": {"order_approved_at_date_Month_Seasont": "Season Name", "order_count": "Total Order Count"}},
-            {"title": "Number of products sold by sellers", "url": "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/Q6.csv", "type": "csv", "plot_func": "bar", "x": "seller_id", "y": "product_count", "color": "product_category", "labels": {"seller_id": "Seller ID", "product_count": "Number of Products"}},
             {"title": "Percentage of late or on-time orders", "url": "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/fig7.json"},
             {"title": "Average delivery delay by product category", "url": "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/fig_delays.json"},
             {"title": "Average freight value by product category", "url": "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/fig8.json"},
@@ -86,17 +93,28 @@ elif page == "Analysis":
             {"title": "Monthly order volume", "url": "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/fig20.json"}
         ]
 
-        for fig in figures:
+        # Load and display JSON-based visualizations
+        for fig in json_figures:
             st.subheader(fig["title"])
-            if fig.get("type") == "csv":
-                try:
-                    df = pd.read_csv(fig["url"])
-                    if fig["plot_func"] == "bar":
-                        plot = px.bar(
-                            df,
-                            x=fig["x"],
-                            y=fig["y"],
-                            color=fig["color"],
-                            title=fig
-::contentReference[oaicite:0]{index=0}
- 
+            chart = load_json_from_github(fig["url"])
+            if chart:
+                st.plotly_chart(chart, use_container_width=True)
+
+        # Special case: CSV-based visualization
+        st.subheader("The highest season that has orders")
+        load_csv_and_plot(
+            url="https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/Q5.csv",
+            x="order_approved_at_date_Month_Seasont",
+            y="order_count",
+            color="order_approved_at_date_Month_Seasont",
+            title="The highest season that has orders"
+        )
+
+        st.subheader("Number of products sold by sellers")
+        load_csv_and_plot(
+            url="https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/Q6.csv",
+            x="seller_id",
+            y="product_count",
+            color="product_category",
+            title="Number of Products Sold by Sellers"
+        )
