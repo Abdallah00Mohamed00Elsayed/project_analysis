@@ -1,4 +1,4 @@
-
+%%writefile apps.py
 import os
 import pandas as pd
 import streamlit as st
@@ -116,7 +116,7 @@ elif page == "Analysis":
 
         st.subheader("Average delivery delay by product category")
         fig_delays_url = "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/fig_delays.json"
-        fig_delays = load_json_from_github(fig_delays_url)
+        fig_delays = loload_json_from_github(fig_delays_url)
         if fig_delays:
             st.plotly_chart(fig_delays, use_container_width=True)
 
@@ -126,7 +126,7 @@ elif page == "Analysis":
         if fig8:
             st.plotly_chart(fig8, use_container_width=True)
 
-        # Repeat the same structure for all remaining figures from fig9 to fig20
+        
         st.subheader("The highest review score by product category")
         fig9_url = "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/fig9.json"
         fig9 = load_json_from_github(fig9_url)
