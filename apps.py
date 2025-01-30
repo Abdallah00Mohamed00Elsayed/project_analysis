@@ -1,4 +1,4 @@
-%%writefile apps.py
+
 import os
 import pandas as pd
 import streamlit as st
