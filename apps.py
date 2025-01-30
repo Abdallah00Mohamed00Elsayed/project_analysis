@@ -116,7 +116,7 @@ elif page == "Analysis":
 
         st.subheader("Average delivery delay by product category")
         fig_delays_url = "https://raw.githubusercontent.com/Abdallah00Mohamed00Elsayed/project_analysis/master/fig_delays.json"
-        fig_delays = loload_json_from_github(fig_delays_url)
+        fig_delays = load_json_from_github(fig_delays_url)
         if fig_delays:
             st.plotly_chart(fig_delays, use_container_width=True)
 
